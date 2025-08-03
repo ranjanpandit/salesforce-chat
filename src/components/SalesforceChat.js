@@ -34,7 +34,7 @@ const SalesforceChat = () => {
     // Load the external Salesforce bootstrap script
     const script = document.createElement("script");
     script.src ="https://orgfarm-0bebac05d5-dev-ed.develop.my.site.com/ESWreactChat1754229088269/assets/js/bootstrap.min.js";
-    script.id = "salesforce-chat-script";
+    script.id = "salesforce-chat-script"; 
     script.type = "text/javascript";
     script.onload = () => {
       window.initEmbeddedMessaging();
