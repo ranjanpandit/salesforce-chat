@@ -16,14 +16,14 @@ const SalesforceChat = () => {
     // Init function
     window.initEmbeddedMessaging = function () {
       try {
-        embeddedservice_bootstrap.settings.language = "en_US";
+        window.embeddedservice_bootstrap.settings.language = "en_US";
 
-        embeddedservice_bootstrap.init(
-          "00DgL000006OOLt", // Replace with your Org ID
-          "reactChat", // Deployment name
-          "https://orgfarm-0bebac05d5-dev-ed.develop.my.site.com/ESWreactChat1754229088269", // Site endpoint
+        window.embeddedservice_bootstrap.init(
+          "00DgL000006OOLt",
+          "reactChat",
+          "https://orgfarm-0bebac05d5-dev-ed.develop.my.site.com/ESWreactChat1754229088269",
           {
-            scrt2URL: "https://orgfarm-0bebac05d5-dev-ed.develop.my.salesforce-scrt.com", // SCRT URL
+            scrt2URL: "https://orgfarm-0bebac05d5-dev-ed.develop.my.salesforce-scrt.com",
           }
         );
       } catch (err) {
@@ -33,8 +33,8 @@ const SalesforceChat = () => {
 
     // Load the external Salesforce bootstrap script
     const script = document.createElement("script");
-    script.src ="https://orgfarm-0bebac05d5-dev-ed.develop.my.site.com/ESWreactChat1754229088269/assets/js/bootstrap.min.js";
-    script.id = "salesforce-chat-script"; 
+    script.src = "https://orgfarm-0bebac05d5-dev-ed.develop.my.site.com/ESWreactChat1754229088269/assets/js/bootstrap.min.js";
+    script.id = "salesforce-chat-script";
     script.type = "text/javascript";
     script.onload = () => {
       window.initEmbeddedMessaging();
@@ -43,7 +43,7 @@ const SalesforceChat = () => {
     document.body.appendChild(script);
   }, []);
 
-  return null; // This component just loads the chat widget
+  return null;
 };
 
 export default SalesforceChat;
