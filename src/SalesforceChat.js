@@ -1,49 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from "react";
 
-const SalesforceChat = () => {
-  const [error, setError] = useState(null);
-
+function SalesforceChat() {
   useEffect(() => {
-    // Prevent multiple initializations
-    if (window.embeddedservice_bootstrap) {
-      console.log('Salesforce Embedded Messaging already initialized');
-      return;
-    }
-
-    // Define the initEmbeddedMessaging function
-    window.initEmbeddedMessaging = function () {
-      try {
-        window.embeddedservice_bootstrap.settings.language = 'en_US';
-        window.embeddedservice_bootstrap.init(
-          '00DgL000006OOLt',
-          'Web_Chat_Channel',
-          'https://orgfarm-0bebac05d5-dev-ed.develop.my.site.com/ESWWebChatChannel1752950521346',
-          {
-            scrt2URL: 'https://orgfarm-0bebac05d5-dev-ed.develop.my.salesforce-scrt.com',
-          }
-        );
-      } catch (err) {
-        console.error('Error loading Embedded Messaging: ', err);
-        setError('Failed to load chat. Please try again later.');
-      }
-    };
-
-    // Create and append the script tag
-    const script = document.createElement('script');
-    script.src = 'https://orgfarm-0bebac05d5-dev-ed.develop.my.site.com/ESWWebChatChannel1752950521346/assets/js/bootstrap.min.js';
+    // Load the bootstrap script
+    const script = document.createElement("script");
+    script.src =
+      "https://orgfarm-0bebac05d5-dev-ed.develop.my.salesforce-scrt.com/embeddedservice/asyncclient/bootstrap.min.js";
     script.async = true;
-    script.onload = () => window.initEmbeddedMessaging();
-    document.body.appendChild(script);
-
-    // Cleanup: Remove script on component unmount
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
+    script.onload = () => {
+      // Initialize embedded service only after script is loaded
+      window.embeddedservice_bootstrapSettings = {
+        embeddedServiceConfig: {
+          organizationId: "00DgL000006OOLt",
+          developerName: "reactApp",
+          baseUrl: "https://orgfarm-0bebac05d5-dev-ed.develop.my.salesforce-scrt.com"
+        }
+      };
+      // Call the bootstrap init method
+      if (window.embeddedservice_bootstrap) {
+        window.embeddedservice_bootstrap.init(
+          "https://orgfarm-0bebac05d5-dev-ed.develop.my.salesforce-scrt.com"
+        );
       }
     };
+
+    document.body.appendChild(script);
   }, []);
 
-  return error ? <div className="alert alert-danger">{error}</div> : null;
-};
+  return null;
+}
 
 export default SalesforceChat;
